@@ -1,1 +1,4 @@
-Vim setup
+#Vim setup
+  - vimrc
+  - plugins
+  
