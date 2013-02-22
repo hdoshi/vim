@@ -1,7 +1,9 @@
+" Syntastic checker options
+let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl' ]
 call pathogen#infect()
 set nocompatible
 behave xterm
-              
+
 if has("terminfo")
   set t_Co=8
   set t_Sf=[3%p1%dm
@@ -58,7 +60,7 @@ map W :w
 
 
 " make tab in normal mode indent code
-nmap <tab> >> 
+nmap <tab> >>
 nmap <s-tab> ^i<bs><esc>
 
 set paste
@@ -69,13 +71,13 @@ map <C-K> :call SyntaxCheck()<CR>
 function! SyntaxCheck()
         let filename = expand("%")
         let ftype = &filetype
-        if ftype == '' 
+        if ftype == ''
                 return
-        echo ftype 
+        echo ftype
         elseif ftype == "cs"
                 if exists("Makefile")
                   let cmd = "!clear; gmake"
-                else 
+                else
                   let cmd = "!clear; mcs --parse " . filename
                 endif
                 echo cmd
@@ -91,7 +93,7 @@ function! SyntaxCheck()
          elseif ftype == "php"
                 let cmd = "!clear; echo \"\"; echo \"\"; php -l " . filename
                 echo cmd
-                execute cmd  
+                execute cmd
         else
                 echo "Cant syntax check file type : " . ftype
                 return
@@ -137,7 +139,7 @@ set wildmode=list:longest
 
 " Make settings
 "set mp=gmake
-"set sp=2>&1\ \|\ ~/bin/addcolor2.pl 
+"set sp=2>&1\ \|\ ~/bin/addcolor2.pl
 "set mef=proj.err
 
 "   Set the equal program
@@ -151,12 +153,12 @@ set cinoptions=g0,+2s,(1s,c1s
 " set cinkeys=0{,0},0),:,0#,!^F,o,O,e {default}
 " don't force perl comment to be entered into column 1
 set cinkeys=0{,0},!^F,o,O,e
-    
+
 "   Completion
 set cpt=k
 set dict=~/.vim_dictionary
-  
-"   What to after building 
+
+"   What to after building
 "let runcmd = 'sudo /home/apache/restart'
 
 " Some mappings that I like
@@ -230,7 +232,7 @@ auto BufEnter * let &titlestring = strpart( hostname(), 0, match( hostname(), '\
 "inoremap { {}O
 inoremap # X#
 
-  
+
 "if expand( "%" ) == ""
 " exe "bp"
 "endif
@@ -245,11 +247,11 @@ set hlsearch
 map <M-;> :noh
 
 
-"   A few niceties for editing when launched from Mutt                
-auto BufEnter /tmp/mutt-* set viminfo= tw=66 nocindent                                              
+"   A few niceties for editing when launched from Mutt
+auto BufEnter /tmp/mutt-* set viminfo= tw=66 nocindent
 
 :au BufNewFile,BufRead {autohandler,dhandler} so /usr/local/share/vim/vim62/syntax/mason.vim
-"auto BufEnter /tmp/mutt-* nmap ^K 0d/^-- $^M                             
+"auto BufEnter /tmp/mutt-* nmap ^K 0d/^-- $^M
 "auto BufEnter /tmp/mutt-* normal O^[
 
 
@@ -284,7 +286,7 @@ set ruler
 "let g:ctags_statusline=1 " To show tag name in status line.
 "let generate_tags=1
 "
-let TE_Ctags_Path = '/usr/local/bin/exctags' 
+let TE_Ctags_Path = '/usr/local/bin/exctags'
 map f :TagExplorer
 
 "Set or remove autoindent and smart indent
@@ -296,7 +298,7 @@ iab pmod ^]:r ~/bin/module_doc.pm^M
 
 noremap <buffer> <F2> :call ToggleForPaste()<CR>
 
-let g:miniBufExplMapWindowNavArrows = 1 
+let g:miniBufExplMapWindowNavArrows = 1
 
 " Move between windows with C-key
 "nnoremap <silent><C-Right> <Esc><C-w>l
@@ -343,7 +345,7 @@ vmap <C-C> :call CommentLines()<CR>
 
 " Use the below highlight group when displaying bad whitespace is desired.
 highlight BadWhitespace ctermbg=red guibg=red
- 
+
 " Display tabs at the beginning of a line in Python mode as bad.
 au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 " Make trailing whitespace be flagged as bad.
@@ -351,7 +353,7 @@ au BufRead,BufNewFile  *.py,*.pyw,*.rb,*.c,*.h,*.pl,*.pm,*.php match BadWhitespa
 
 
 filetype on
-map <C-U> <C-]> 
+map <C-U> <C-]>
 map <C-L> g]
 
 function! SuperCleverTab()
@@ -368,7 +370,7 @@ function! SuperCleverTab()
     endif
 endfunction
 
-set nocp                                                                                                                                                                                      
+set nocp
 filetype plugin on
 filetype plugin indent on
 set ofu=syntaxcomplete#Complete
@@ -378,7 +380,8 @@ autocmd FileType actionscript set omnifunc=actionscriptcomplete#CompleteAS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif 
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+autocmd BufWritePre * :%s/\s\+$//e
 au Bufread,BufNewFile *.as set filetype=actionscript
 command Asgrep execute "lvim /%/gj ./**/*.as"
 command Phpgrep execute "lvim /%/gj ./**/*.php"
@@ -386,11 +389,32 @@ command Phpgrep execute "lvim /%/gj ./**/*.php"
 map <F4> :execute "lvim /" . expand("<cword>") . "/gj ./**/*.as" <Bar> lw<CR>
 map <F5> :execute "lvim /" . expand("<cword>") . "/gj ./**/*.php" <Bar> lw<CR>
 "map <C-j> :execute "lvim /" . expand("<cword>") . "/gj ./**/*.h ./**/*.c ./**/*.rb ./**/*.php" <Bar> lw<CR>
-map <C-j> :execute "Ack"<CR> 
+map <C-j> :execute "Ack"<CR>
 nmap <C-y> :NERDTreeToggle<CR>
 autocmd vimenter * NERDTree
 nmap <leader>nf :NERDTreeFind<CR>
 nmap <C-g> :TagbarToggle<CR>
 
-" Syntastic checker options
-let g:syntastic_c_include_dirs = ['.', '../', 'includes', '../includes', 'libevent', 'protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c' ]
+" Swap split windows
+function! MarkWindowSwap()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! DoWindowSwap()
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf
+endfunction
+
+nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
+nmap <silent> <leader>pw :call DoWindowSwap()<CR>
+
