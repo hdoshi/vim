@@ -9,9 +9,9 @@ if has("terminfo")
   set t_Sf=[3%p1%dm
   set t_Sb=[4%p1%dm
 else
-    set t_Co=8
-    set t_Sf=[3%dm
-    set t_Sb=[4%dm
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
 endif
 
 ""   Termcap seems to be broken for backspace ???  -13 Aug 99-
@@ -69,35 +69,35 @@ set pastetoggle=<F10>
 map <C-K> :call SyntaxCheck()<CR>
 
 function! SyntaxCheck()
-        let filename = expand("%")
-        let ftype = &filetype
-        if ftype == ''
-                return
-        echo ftype
-        elseif ftype == "cs"
-                if exists("Makefile")
-                  let cmd = "!clear; gmake"
-                else
-                  let cmd = "!clear; mcs --parse " . filename
-                endif
-                echo cmd
-                execute cmd
-        elseif ftype == "perl"
-                let cmd = "!clear; echo \"\"; echo \"\"; perl -cw " . filename
-                echo cmd
-                execute cmd
-        elseif ftype == "javascript"
-                let cmd = "!clear; echo \"\"; echo \"\"; smjs " . filename
-                echo cmd
-                execute cmd
-         elseif ftype == "php"
-                let cmd = "!clear; echo \"\"; echo \"\"; php -l " . filename
-                echo cmd
-                execute cmd
-        else
-                echo "Cant syntax check file type : " . ftype
-                return
-        endif
+  let filename = expand("%")
+  let ftype = &filetype
+  if ftype == ''
+    return
+    echo ftype
+  elseif ftype == "cs"
+    if exists("Makefile")
+      let cmd = "!clear; gmake"
+    else
+      let cmd = "!clear; mcs --parse " . filename
+    endif
+    echo cmd
+    execute cmd
+  elseif ftype == "perl"
+    let cmd = "!clear; echo \"\"; echo \"\"; perl -cw " . filename
+    echo cmd
+    execute cmd
+  elseif ftype == "javascript"
+    let cmd = "!clear; echo \"\"; echo \"\"; smjs " . filename
+    echo cmd
+    execute cmd
+  elseif ftype == "php"
+    let cmd = "!clear; echo \"\"; echo \"\"; php -l " . filename
+    echo cmd
+    execute cmd
+  else
+    echo "Cant syntax check file type : " . ftype
+    return
+  endif
 endfunction
 
 """""""""""""""""""""
@@ -321,7 +321,7 @@ let Tlist_Process_File_Always = 1
 set tags=/Users/harshdoshi/git/tags
 map <esc><space> <C-w>j
 
- " Set comment characters for common languages
+" Set comment characters for common languages
 autocmd FileType python,sh,bash,zsh,ruby,perl,muttrc let StartComment="#" | let EndComment=""
 autocmd FileType html let StartComment="<!--" | let EndComment="-->"
 autocmd FileType php,cpp,javascript let StartComment="//" | let EndComment=""
@@ -331,13 +331,13 @@ autocmd FileType ini let StartComment=";" | let EndComment=""
 
 " Toggle comments on a visual block
 function! CommentLines()
-    try
-        execute ":s@^".g:StartComment." @\@g"
-        execute ":s@ ".g:EndComment."$@@g"
-    catch
-        execute ":s@^@".g:StartComment." @g"
-        execute ":s@$@ ".g:EndComment."@g"
-    endtry
+  try
+    execute ":s@^".g:StartComment." @\@g"
+    execute ":s@ ".g:EndComment."$@@g"
+  catch
+    execute ":s@^@".g:StartComment." @g"
+    execute ":s@$@ ".g:EndComment."@g"
+  endtry
 endfunction
 
 " Comment convenientlyvmap <C-C> :call CommentLines()<CR>
@@ -357,17 +357,17 @@ map <C-U> <C-]>
 map <C-L> g]
 
 function! SuperCleverTab()
-    if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
-        return "\"
+  if strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+    return "\"
+  else
+    if &omnifunc != ''
+      return "\\"
+    elseif &dictionary != ''
+      return "\"
     else
-        if &omnifunc != ''
-            return "\\"
-        elseif &dictionary != ''
-            return "\"
-        else
-            return "\"
-        endif
+      return "\"
     endif
+  endif
 endfunction
 
 set nocp
@@ -397,22 +397,22 @@ nmap <C-g> :TagbarToggle<CR>
 
 " Swap split windows
 function! MarkWindowSwap()
-    let g:markedWinNum = winnr()
+  let g:markedWinNum = winnr()
 endfunction
 
 function! DoWindowSwap()
-    "Mark destination
-    let curNum = winnr()
-    let curBuf = bufnr( "%" )
-    exe g:markedWinNum . "wincmd w"
-    "Switch to source and shuffle dest->source
-    let markedBuf = bufnr( "%" )
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' curBuf
-    "Switch to dest and shuffle source->dest
-    exe curNum . "wincmd w"
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' markedBuf
+  "Mark destination
+  let curNum = winnr()
+  let curBuf = bufnr( "%" )
+  exe g:markedWinNum . "wincmd w"
+  "Switch to source and shuffle dest->source
+  let markedBuf = bufnr( "%" )
+  "Hide and open so that we aren't prompted and keep history
+  exe 'hide buf' curBuf
+  "Switch to dest and shuffle source->dest
+  exe curNum . "wincmd w"
+  "Hide and open so that we aren't prompted and keep history
+  exe 'hide buf' markedBuf
 endfunction
 
 nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
