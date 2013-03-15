@@ -1,6 +1,6 @@
-" Syntastic checker options
-let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl' ]
+let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl', './yajl/api', './data_libs/c/src' ]
 call pathogen#infect()
+let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl', './yajl/api', './data_libs/c/src' ]
 set nocompatible
 behave xterm
 
@@ -417,4 +417,18 @@ endfunction
 
 nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
 nmap <silent> <leader>pw :call DoWindowSwap()<CR>
-
+" Syntastic checker options
+" YCM config
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
+let g:syntastic_echo_current_error=1
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : [''],
+  \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
