@@ -65,7 +65,13 @@ flags = [
  '-I',
  './protobuf_defs/c',
  '-I',
- './adserving_libs'
+ './adserving_libs',
+ '-I',
+ './libevent/WIN32-Code',
+ '-I',
+ './yajl/api',
+ '-I',
+ './data_libs/c/src'
 ]
 
 if compilation_database_folder:
