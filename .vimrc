@@ -19,10 +19,8 @@ endif
 "    set t_kb=
 "    fixdel
 "endif
-
 " Tab stuff
-"set ts=4
-set ts=8
+set ts=4
 set sts=4
 set shiftwidth=2
 "   Make every tab really be spaces
@@ -166,17 +164,16 @@ nmap  O#ifdef kathey_ANTIQUEj
 nmap  o#endif /*  kathey_ANTIQUE  */k
 vmap  oVO#ifdef kathey_ANTIQUEjgvoVo#endif  /*  kathey_ANTIQUE  */k
 
-nmap [18~ ggO/***   $Source: $** $Revision: $**     $Date: $**   $Author: $*/j
-nmap [19~ :source ~/.vimrc:if filereadable( "./.vimrc" )source ./.vimrcendif
-"map [20~ :!sudo /home/apache/restart
-"map [20~ :execute "!" .  runcmd . ""
+nmap [18~ ggO/***   $Source: $** $Revision: $**     $Date: $**   $Author: $*/j
+nmap [19~ :source ~/.vimrc:if filereadable( "./.vimrc" )source ./.vimrcendif
+"map [20~ :!sudo /home/apache/restart
+"map [20~ :execute "!" .  runcmd . ""
 "nmap [20~ :execute '!' .  runcmd
 "nmap  :execute '!' .  runcmd
 "nmap [21~ :mak
-"nmap  :mak
+"nmap  :mak
 "nmap  :mak %:r.o
 "nmap [17~ 0d/^-- $
-"nmap  ggO"%P:s/.*\///eA__I__:s/\./_/gegUU"zyyI#ifndef "zpI#define oGo"zpI#endif  /*  A */
 
 " Navigate buffers
 map  :bn
@@ -229,7 +226,7 @@ auto BufEnter * let &titlestring = strpart( hostname(), 0, match( hostname(), '\
 "iab pu public:
 "iab pro protected:
 "iab pri private:
-"inoremap { {}O
+"inoremap { {}O
 inoremap # X#
 
 
@@ -419,9 +416,9 @@ nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
 nmap <silent> <leader>pw :call DoWindowSwap()<CR>
 " Syntastic checker options
 " YCM config
-let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
-let g:syntastic_echo_current_error=1
+"let g:ycm_add_preview_to_completeopt = 0
+"set completeopt-=preview
+"let g:syntastic_echo_current_error=1
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.'],
@@ -431,3 +428,14 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
+set updatetime=1000
+
+"turn on tabs if that's the file format
+function Kees_settabs()
+    if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
+        set noet ts=8 sw=8
+    endif
+endfunction
+autocmd BufReadPost * call Kees_settabs()
+
+
