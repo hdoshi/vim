@@ -1,8 +1,20 @@
-let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl', './yajl/api', './data_libs/c/src' ]
+" Auto complete braces
+inoremap {      {}<Left>
+inoremap {<CR>  {<CR>}<Esc>O
+inoremap {{     {
+inoremap {}     {}
+inoremap ( ()<Esc>i
 call pathogen#infect()
 let g:syntastic_c_include_dirs = ['.', '../', './includes', '../includes', './libevent', './protobuf-c', 'protobuf_defs', 'memalloc', 'adserving_libs', 'protobuf_defs/c', './yajl', './yajl/api', './data_libs/c/src' ]
 set nocompatible
 behave xterm
+
+
+
+
+"syntax enable
+"set background=dark
+"colorscheme solarized
 
 if has("terminfo")
   set t_Co=8
@@ -13,6 +25,9 @@ else
   set t_Sf=[3%dm
   set t_Sb=[4%dm
 endif
+
+set backspace=2
+set backspace=indent,eol,start
 
 ""   Termcap seems to be broken for backspace ???  -13 Aug 99-
 "if &term == "xterm-color"
@@ -159,10 +174,6 @@ set dict=~/.vim_dictionary
 "   What to after building
 "let runcmd = 'sudo /home/apache/restart'
 
-" Some mappings that I like
-nmap  O#ifdef kathey_ANTIQUEj
-nmap  o#endif /*  kathey_ANTIQUE  */k
-vmap  oVO#ifdef kathey_ANTIQUEjgvoVo#endif  /*  kathey_ANTIQUE  */k
 
 nmap [18~ ggO/***   $Source: $** $Revision: $**     $Date: $**   $Author: $*/j
 nmap [19~ :source ~/.vimrc:if filereadable( "./.vimrc" )source ./.vimrcendif
@@ -226,8 +237,7 @@ auto BufEnter * let &titlestring = strpart( hostname(), 0, match( hostname(), '\
 "iab pu public:
 "iab pro protected:
 "iab pri private:
-"inoremap { {}O
-inoremap # X#
+"inoremap # X#
 
 
 "if expand( "%" ) == ""
@@ -315,7 +325,8 @@ let tlist_php_settings='php;f:function'
 let tlist_javascript_settings='javascript;f:function;p:property;v:variable'
 let tlist_actionscript_settings = 'actionscript;c:class;f:method;p:property;v:variable'
 let Tlist_Process_File_Always = 1
-set tags=/Users/harshdoshi/git/tags
+"set tags=/Users/harshdoshi/git/tags
+set tags=./tags;/
 map <esc><space> <C-w>j
 
 " Set comment characters for common languages
@@ -431,11 +442,15 @@ let g:ycm_semantic_triggers =  {
 set updatetime=1000
 
 "turn on tabs if that's the file format
-function Kees_settabs()
+function Settabs()
     if len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^\\t"')) > len(filter(getbufline(winbufnr(0), 1, "$"), 'v:val =~ "^ "'))
         set noet ts=8 sw=8
     endif
 endfunction
-autocmd BufReadPost * call Kees_settabs()
+autocmd BufReadPost * call Settabs()
 
+" set iterm title
+set t_ts=^[]1;
+set t_fs=^G
+nnoremap <Space> @q
 
