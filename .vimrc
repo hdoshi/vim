@@ -453,4 +453,5 @@ autocmd BufReadPost * call Settabs()
 set t_ts=^[]1;
 set t_fs=^G
 nnoremap <Space> @q
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 
